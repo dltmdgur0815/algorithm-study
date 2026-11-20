@@ -24,3 +24,26 @@ def search(root, target):
             return False, path
         current = current.children[index]
     return False, path
+
+def range_search(root, low, high):
+    result = []
+    visited = []
+    if low > high:
+        return result, visited
+
+    def visit(node):
+        if node is None:
+            return
+        visited.append(node.keys.copy())
+        for index, number in enumerate(node.keys):
+            if node.children and low < number:
+                visit(node.children[index])
+            if number > high:
+                return
+            if number >= low:
+                result.append(number)
+        if node.children and (not node.keys or high > node.keys[-1]):
+            visit(node.children[-1])
+
+    visit(root)
+    return result, visited
