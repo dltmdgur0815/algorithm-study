@@ -45,3 +45,23 @@ def inorder(root):
         result.append(current.number)
         current = current.right
     return result
+
+def range_search(root, low, high):
+    result = []
+    stack = []
+    current = root
+    while current is not None or stack:
+        while current is not None:
+            if current.number < low:
+                current = current.right
+            else:
+                stack.append(current)
+                current = current.left
+        if not stack:
+            break
+        current = stack.pop()
+        if current.number > high:
+            break
+        result.append(current.number)
+        current = current.right
+    return result
